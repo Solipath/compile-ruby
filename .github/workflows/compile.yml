@@ -47,7 +47,7 @@ jobs:
       run: |
         cd download
         ls
-        tar -xvf ruby-${{env.VERSION}}-${{matrix.name}}.tar.gz
+        tar -xvf ruby-${{env.VERSION}}.tar.gz
         cd ruby-${{env.VERSION}}
         echo "git workspace: ${{github.workspace}}"
         chmod +x configure.ac
