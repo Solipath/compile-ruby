@@ -35,12 +35,14 @@ jobs:
        #     name: windows_x86_64
        #     target: x86_64-pc-windows-msvc
     steps:
+    - name: make download directory
+      run: mkdir download
     - uses: suisei-cn/actions-download-file@v1.3.0
       id: downloadfile  # Remember to give an ID if you need the output filename
       name: Download the file
       with:
         url: "https://github.com/ruby/ruby/archive/refs/tags/v${{env.UNDERSCORE_VERSION}}.tar.gz"
-        target: /download
+        target: download
     - name: compile ruby
       run: |
         tar -xvf ruby-${{env.UNDERSCORE_VERSION}}.tar.gz
