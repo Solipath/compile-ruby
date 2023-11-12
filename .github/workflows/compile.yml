@@ -43,7 +43,7 @@ jobs:
         target: /
     - name: compile ruby
       run: |
-      tar -xvf ruby-${{UNDERSCORE_VERSION}}.tar.gz
+        tar -xvf ruby-${{UNDERSCORE_VERSION}}.tar.gz
         cd ruby-${{UNDERSCORE_VERSION}}
         mkdir output
         ./configure --prefix="${{PWD}}/output"
