@@ -39,12 +39,12 @@ jobs:
       id: downloadfile  # Remember to give an ID if you need the output filename
       name: Download the file
       with:
-        url: "https://github.com/ruby/ruby/archive/refs/tags/v${{UNDERSCORE_VERSION}}.tar.gz"
+        url: "https://github.com/ruby/ruby/archive/refs/tags/v${{env.UNDERSCORE_VERSION}}.tar.gz"
         target: /
     - name: compile ruby
       run: |
-        tar -xvf ruby-${{UNDERSCORE_VERSION}}.tar.gz
-        cd ruby-${{UNDERSCORE_VERSION}}
+        tar -xvf ruby-${{env.UNDERSCORE_VERSION}}.tar.gz
+        cd ruby-${{env.UNDERSCORE_VERSION}}
         mkdir output
         ./configure --prefix="${{PWD}}/output"
         make
@@ -53,8 +53,8 @@ jobs:
     - uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "${{VERSION}}-${{matrix.name}}"
+        automatic_release_tag: "${{env.VERSION}}-${{matrix.name}}"
         prerelease: false
-        title: "${{VERSION}}-${{matrix.name}}"
+        title: "${{env.VERSION}}-${{matrix.name}}"
         files: |
-          ruby-${{UNDERSCORE_VERSION}}/ruby.tar.gz
+          ruby-${{env.UNDERSCORE_VERSION}}/ruby.tar.gz
