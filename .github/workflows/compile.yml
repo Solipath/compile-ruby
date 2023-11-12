@@ -8,8 +8,8 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
-  VERSION: "3.1.2"
-  UNDERSCORE_VERSION: "3_1_2"
+  VERSION: "3.2.2"
+  SHORT_VERSION: "3.2"
 
 jobs:
   build:
@@ -41,15 +41,16 @@ jobs:
       id: downloadfile  # Remember to give an ID if you need the output filename
       name: Download the file
       with:
-        url: "https://github.com/ruby/ruby/archive/refs/tags/v${{env.UNDERSCORE_VERSION}}.tar.gz"
+        url: "https://cache.ruby-lang.org/pub/ruby/${{env.SHORT_VERSION}}/ruby-${{env.VERSION}}.tar.gz"
         target: download
     - name: compile ruby
       run: |
         cd download
         ls
-        tar -xvf v${{env.UNDERSCORE_VERSION}}.tar.gz
-        cd ruby-${{env.UNDERSCORE_VERSION}}
+        tar -xvf ruby-${{env.VERSION}}.tar.gz
+        cd ruby-${{env.VERSION}}
         mkdir output
+        chmod +x configure.ac
         ./configure --prefix="${{env.PWD}}/output"
         make
         make install
@@ -61,4 +62,4 @@ jobs:
         prerelease: false
         title: "${{env.VERSION}}-${{matrix.name}}"
         files: |
-          download/ruby-${{env.UNDERSCORE_VERSION}}/ruby.tar.gz
+          download/ruby-${{env.VERSION}}/ruby.tar.gz
