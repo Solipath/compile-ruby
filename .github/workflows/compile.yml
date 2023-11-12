@@ -46,6 +46,7 @@ jobs:
     - name: compile ruby
       run: |
         cd download
+        ls
         tar -xvf ruby-${{env.UNDERSCORE_VERSION}}.tar.gz
         cd ruby-${{env.UNDERSCORE_VERSION}}
         mkdir output
