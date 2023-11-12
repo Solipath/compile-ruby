@@ -44,12 +44,12 @@ jobs:
     - name: compile ruby
       run: |
       tar -xvf ruby-${{UNDERSCORE_VERSION}}.tar.gz
-      cd ruby-${{UNDERSCORE_VERSION}}
-      mkdir output
-      ./configure --prefix="${{PWD}}/output"
-      make
-      make install
-      tar -czvf ruby.tar.gz output
+        cd ruby-${{UNDERSCORE_VERSION}}
+        mkdir output
+        ./configure --prefix="${{PWD}}/output"
+        make
+        make install
+        tar -czvf ruby.tar.gz output
     - uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
