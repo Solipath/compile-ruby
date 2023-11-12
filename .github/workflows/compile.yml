@@ -40,11 +40,11 @@ jobs:
       name: Download the file
       with:
         url: "https://github.com/ruby/ruby/archive/refs/tags/v${{env.UNDERSCORE_VERSION}}.tar.gz"
-        target: /
+        target: /download
     - name: compile ruby
       run: |
         tar -xvf ruby-${{env.UNDERSCORE_VERSION}}.tar.gz
-        cd ruby-${{env.UNDERSCORE_VERSION}}
+        cd download/ruby-${{env.UNDERSCORE_VERSION}}
         mkdir output
         ./configure --prefix="${{env.PWD}}/output"
         make
@@ -57,4 +57,4 @@ jobs:
         prerelease: false
         title: "${{env.VERSION}}-${{matrix.name}}"
         files: |
-          ruby-${{env.UNDERSCORE_VERSION}}/ruby.tar.gz
+          download/ruby-${{env.UNDERSCORE_VERSION}}/ruby.tar.gz
