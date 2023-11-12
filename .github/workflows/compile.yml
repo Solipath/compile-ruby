@@ -45,8 +45,9 @@ jobs:
         target: download
     - name: compile ruby
       run: |
+        cd download
         tar -xvf ruby-${{env.UNDERSCORE_VERSION}}.tar.gz
-        cd download/ruby-${{env.UNDERSCORE_VERSION}}
+        cd ruby-${{env.UNDERSCORE_VERSION}}
         mkdir output
         ./configure --prefix="${{env.PWD}}/output"
         make
