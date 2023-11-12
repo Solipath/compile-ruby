@@ -54,7 +54,7 @@ jobs:
         ./configure --prefix="${{ github.workspace }}/download/ruby-${{env.VERSION}}/output"
         make
         make install
-        tar -czvf ruby-${{env.VERSION}}-${{matrix.version}}.tar.gz output
+        tar -czvf ruby-${{env.VERSION}}-${{matrix.name}}.tar.gz output
     - uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
