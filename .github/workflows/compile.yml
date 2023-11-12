@@ -50,6 +50,7 @@ jobs:
         tar -xvf ruby-${{env.VERSION}}.tar.gz
         cd ruby-${{env.VERSION}}
         mkdir output
+        chmod 777 output
         echo "present working directory: ${{env.PWD}}"
         chmod +x configure.ac
         ./configure --prefix="${{env.PWD}}/output"
