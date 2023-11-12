@@ -47,19 +47,19 @@ jobs:
       run: |
         cd download
         ls
-        tar -xvf ruby-${{env.VERSION}}.tar.gz
+        tar -xvf ruby-${{env.VERSION}}-${{matrix.name}}.tar.gz
         cd ruby-${{env.VERSION}}
         echo "git workspace: ${{github.workspace}}"
         chmod +x configure.ac
         ./configure --prefix="${{ github.workspace }}/download/ruby-${{env.VERSION}}/output"
         make
         make install
-        tar -czvf ruby.tar.gz output
+        tar -czvf ruby-${{env.VERSION}}-${{matrix.version}}.tar.gz output
     - uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "${{env.VERSION}}-${{matrix.name}}"
+        automatic_release_tag: "${{env.VERSION}}"
         prerelease: false
-        title: "${{env.VERSION}}-${{matrix.name}}"
+        title: "${{env.VERSION}}"
         files: |
-          download/ruby-${{env.VERSION}}/ruby.tar.gz
+          download/ruby-${{env.VERSION}}/ruby-${{env.VERSION}}-${{matrix.name}}.tar.gz
