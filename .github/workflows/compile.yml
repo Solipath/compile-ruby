@@ -47,7 +47,7 @@ jobs:
       run: |
         cd download
         ls
-        tar -xvf ${{env.UNDERSCORE_VERSION}}.tar.gz
+        tar -xvf v${{env.UNDERSCORE_VERSION}}.tar.gz
         cd ruby-${{env.UNDERSCORE_VERSION}}
         mkdir output
         ./configure --prefix="${{env.PWD}}/output"
