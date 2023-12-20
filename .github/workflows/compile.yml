@@ -57,7 +57,7 @@ jobs:
         cd build
         chmod +x conanbuild.sh
         ./conanbuild.sh && ../ruby-${{env.VERSION}}/configure --disable-shared --enable-static --prefix="$PWD/bin" && make && make install
-        tar -czvf ruby.tar.gz output
+        tar -czvf ruby.tar.gz bin
     - name: release ruby
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
