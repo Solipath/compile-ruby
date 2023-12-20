@@ -35,13 +35,9 @@ jobs:
        #     name: windows_x86_64
        #     target: x86_64-pc-windows-msvc
     steps:
-    - name: pull dependencies
-    - uses: actions/checkout@v3
-    - name: make download directory
-      run: mkdir download
-    - uses: suisei-cn/actions-download-file@v1.3.0
+    - name: Download the file
+      uses: suisei-cn/actions-download-file@v1.3.0
       id: downloadfile  # Remember to give an ID if you need the output filename
-      name: Download the file
       with:
         url: "https://cache.ruby-lang.org/pub/ruby/${{env.SHORT_VERSION}}/ruby-${{env.VERSION}}.tar.gz"
         target: download
@@ -51,8 +47,9 @@ jobs:
         ls
         tar -xvf ruby-${{env.VERSION}}.tar.gz
         mv ruby-${{env.VERSION}} ..
-        cd ..
-        ls
+    - name: pull github workspace
+      uses: actions/checkout@v3
+      run: |
         echo "git workspace: ${{github.workspace}}"
         ./solipath poetry install
         ./solipath poetry run conan install -of build .
@@ -60,7 +57,8 @@ jobs:
         chmod +x conanbuild.sh
         ./conanbuild.sh && ../ruby-${{env.VERSION}}/configure --disable-shared --enable-static --prefix="$PWD/bin" && make && make install
         tar -czvf ruby.tar.gz output
-    - uses: "marvinpinto/action-automatic-releases@latest"
+    - name: release ruby
+      uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         automatic_release_tag: "${{env.VERSION}}-${{matrix.name}}"
@@ -68,3 +66,4 @@ jobs:
         title: "${{env.VERSION}}-${{matrix.name}}"
         files: |
           ruby-${{env.VERSION}}/ruby.tar.gz
+          
