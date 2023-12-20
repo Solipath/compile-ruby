@@ -41,8 +41,9 @@ jobs:
       with:
         url: "https://cache.ruby-lang.org/pub/ruby/${{env.SHORT_VERSION}}/ruby-${{env.VERSION}}.tar.gz"
         target: download
-    - name: compile ruby
+    - name: checkout code
       uses: actions/checkout@v3
+    - name: compile ruby
       run: |
         cd download
         ls
