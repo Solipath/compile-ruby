@@ -52,6 +52,7 @@ jobs:
         echo "git workspace: ${{github.workspace}}"
         cd ..
         ./solipath poetry install
+        ./solipath poetry run conan profile detect
         ./solipath poetry run conan install -of build .
         cd build
         chmod +x conanbuild.sh
