@@ -50,6 +50,7 @@ jobs:
         tar -xvf ruby-${{env.VERSION}}.tar.gz
         mv ruby-${{env.VERSION}} ..
         echo "git workspace: ${{github.workspace}}"
+        cd ..
         ./solipath poetry install
         ./solipath poetry run conan install -of build .
         cd build
