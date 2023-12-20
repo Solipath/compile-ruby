@@ -42,14 +42,12 @@ jobs:
         url: "https://cache.ruby-lang.org/pub/ruby/${{env.SHORT_VERSION}}/ruby-${{env.VERSION}}.tar.gz"
         target: download
     - name: compile ruby
+      uses: actions/checkout@v3
       run: |
         cd download
         ls
         tar -xvf ruby-${{env.VERSION}}.tar.gz
         mv ruby-${{env.VERSION}} ..
-    - name: pull github workspace
-      uses: actions/checkout@v3
-      run: |
         echo "git workspace: ${{github.workspace}}"
         ./solipath poetry install
         ./solipath poetry run conan install -of build .
