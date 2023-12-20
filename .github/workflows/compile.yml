@@ -35,14 +35,14 @@ jobs:
        #     name: windows_x86_64
        #     target: x86_64-pc-windows-msvc
     steps:
+    - name: checkout code
+      uses: actions/checkout@v3
     - name: Download the file
       uses: suisei-cn/actions-download-file@v1.3.0
       id: downloadfile  # Remember to give an ID if you need the output filename
       with:
         url: "https://cache.ruby-lang.org/pub/ruby/${{env.SHORT_VERSION}}/ruby-${{env.VERSION}}.tar.gz"
         target: download
-    - name: checkout code
-      uses: actions/checkout@v3
     - name: compile ruby
       run: |
         cd download
