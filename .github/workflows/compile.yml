@@ -48,12 +48,14 @@ jobs:
         cd download
         ls
         tar -xvf ruby-${{env.VERSION}}.tar.gz
-        cd ruby-${{env.VERSION}}
+        mv ruby-${{env.VERSION}} ..
+        cd ..
         echo "git workspace: ${{github.workspace}}"
-        chmod +x configure.ac
-        ./configure --prefix="${{ github.workspace }}/download/ruby-${{env.VERSION}}/output"
-        make
-        make install
+        ./solipath poetry install
+        ./solipath poetry run conan install -of build .
+        cd build
+        chmod +x conanbuild.sh
+        ./conanbuild.sh && ../ruby-${{env.VERSION}}/configure --disable-shared --enable-static --prefix="$PWD/bin" && make && make install
         tar -czvf ruby.tar.gz output
     - uses: "marvinpinto/action-automatic-releases@latest"
       with:
@@ -62,4 +64,4 @@ jobs:
         prerelease: false
         title: "${{env.VERSION}}-${{matrix.name}}"
         files: |
-          download/ruby-${{env.VERSION}}/ruby.tar.gz
+          ruby-${{env.VERSION}}/ruby.tar.gz
