@@ -66,5 +66,5 @@ jobs:
         prerelease: false
         title: "${{env.VERSION}}-${{matrix.name}}"
         files: |
-          ruby-${{env.VERSION}}/ruby.tar.gz
+          build/ruby.tar.gz
           
