@@ -110,7 +110,7 @@ class RubyConan(ConanFile):
                 tc.configure_args.append("--enable-shared")
 
         if cross_building(self) and is_apple_os(self):
-            apple_arch = to_apple_arch(self.settings.arch)
+            apple_arch = to_apple_arch(self)
             if apple_arch:
                 tc.configure_args.append(f"--with-arch={apple_arch}")
         if is_msvc(self):
