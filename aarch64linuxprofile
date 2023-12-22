@@ -8,4 +8,4 @@ compiler.cppstd=11
 compiler.version=7.5
 
 [buildenv]
-CC=aarch64-linux-gnu-gcc
+CC=/usr/bin/aarch64-linux-gnu-gcc
