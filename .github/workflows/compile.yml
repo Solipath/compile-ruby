@@ -25,7 +25,7 @@ jobs:
             target: x86_64-apple-darwin
             compiler: x86_64-apple-darwin-clang
             build: x86_64-apple-darwin
-          - os: macos-13-arm64
+          - os: macos-13
             name: macos_aarch64
             conan_target: m1profile
             target: aarch64-apple-darwin
@@ -54,6 +54,7 @@ jobs:
         target: download
     - name: configure ruby build
       run: |
+        uname -m
         cd download
         ls
         tar -xvf ruby-${{env.VERSION}}.tar.gz
