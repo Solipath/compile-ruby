@@ -5,7 +5,7 @@ compiler=gcc
 build_type=Release
 compiler.libcxx=libstdc++11
 compiler.cppstd=gnu17
-compiler.version=7.5
+compiler.version=11
 
 [buildenv]
 CC=/usr/bin/aarch64-linux-gnu-gcc
