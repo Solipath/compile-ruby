@@ -25,18 +25,25 @@ jobs:
             target: x86_64-apple-darwin
             compiler: x86_64-apple-darwin-clang
             build: x86_64-apple-darwin
-          - os: macos-13
-            name: macos_aarch64
-            conan_target: m1profile
-            target: aarch64-apple-darwin
-            compiler: armv8a-apple-darwin-clang
-            build: aarch64-apple-darwin
+          #- os: macos-latest
+          #  name: macos_aarch64
+          #  conan_target: m1profile
+          #  target: aarch64-apple-darwin
+          #  compiler: armv8a-apple-darwin-clang
+          #  build: aarch64-apple-darwin
           - os: ubuntu-latest
             name: linux_x86_64
             conan_target: default
             target: x86_64-unknown-linux-gnu
             compiler: gcc
             build: x86_64-unknown-linux-gnu
+          - os: ubuntu-latest
+            name: linux_aarch64
+            conan_target: aarch64linuxprofile
+            target: aarch64-unknown-linux-gnu
+            compiler: gcc-aarch64-linux-gnu
+            build: x86_64-unknown-linux-gnu
+
        #   - os: ubuntu-latest
        #     name: linux_aarch64
        #     target: aarch64-unknown-linux-gnu
@@ -52,6 +59,9 @@ jobs:
       with:
         url: "https://cache.ruby-lang.org/pub/ruby/${{env.SHORT_VERSION}}/ruby-${{env.VERSION}}.tar.gz"
         target: download
+    - name: get compiler for aarch64 linux
+      if: ${{'aarch64-unknown-linux-gnu' == matrix.target}}
+      run: sudo apt-get update && sudo apt-get install gcc-aarch64-linux-gnu
     - name: configure ruby build
       run: |
         uname -m
