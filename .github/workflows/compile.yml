@@ -68,6 +68,7 @@ jobs:
         ./conanbuild.sh && ../ruby-${{env.VERSION}}/configure --build=${{matrix.target}} --host=${{matrix.target}} --target=${{matrix.target}} --enable-load-relative --disable-shared --enable-static --without-gmp --prefix="$PWD/bin"
     - name: compile ruby
       run: |
+        cd build
         ls -a
         echo "Print Makefile:"
         cat Makefile
