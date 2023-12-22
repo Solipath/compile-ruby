@@ -62,7 +62,7 @@ jobs:
         ./solipath poetry run conan install --build=missing --profile:host=${{matrix.conan_target}} -of build .
         cd build
         chmod +x conanbuild.sh
-        ./conanbuild.sh && ../ruby-${{env.VERSION}}/configure --build=${{matrix.build}} --host=${{matrix.target}} --enable-load-relative --disable-shared --enable-static --without-gmp --prefix="$PWD/bin" && make && make install
+        ./conanbuild.sh && ../ruby-${{env.VERSION}}/configure --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}} --enable-load-relative --disable-shared --enable-static --without-gmp --prefix="$PWD/bin" && make && make install
         tar -czvf ruby.tar.gz bin
     - name: release ruby
       uses: "marvinpinto/action-automatic-releases@latest"
