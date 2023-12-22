@@ -66,7 +66,6 @@ jobs:
         cd build
         chmod +x conanbuild.sh
         ./conanbuild.sh && ../ruby-${{env.VERSION}}/configure --build=${{matrix.target}} --host=${{matrix.target}} --target=${{matrix.target}} --enable-load-relative --disable-shared --enable-static --without-gmp --prefix="$PWD/bin"
-        tar -czvf ruby.tar.gz bin
     - name: compile ruby
       run: |
         ls -a
@@ -74,6 +73,7 @@ jobs:
         cat Makefile
         echo "start build"
         ./conanbuild.sh && make && make install
+        tar -czvf ruby.tar.gz bin
     - name: release ruby
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
