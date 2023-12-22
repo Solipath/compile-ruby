@@ -25,12 +25,12 @@ jobs:
             target: x86_64-apple-darwin
             compiler: x86_64-apple-darwin-clang
             build: x86_64-apple-darwin
-          - os: macos-latest
+          - os: macos-13-arm64
             name: macos_aarch64
             conan_target: m1profile
             target: aarch64-apple-darwin
             compiler: armv8a-apple-darwin-clang
-            build: x86_64-apple-darwin
+            build: aarch64-apple-darwin
           - os: ubuntu-latest
             name: linux_x86_64
             conan_target: default
