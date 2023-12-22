@@ -21,13 +21,13 @@ jobs:
         include:
           - os: macos-latest
             name: macos_x86_64
-            target: x86_64-apple-darwin
-       #   - os: macos-latest
-       #     name: macos_aarch64
-       #     target: aarch64-apple-darwin
+            target: default
+          - os: macos-latest
+            name: macos_aarch64
+            target: m1profile
           - os: ubuntu-latest
             name: linux_x86_64
-            target: x86_64-unknown-linux-gnu
+            target: default
        #   - os: ubuntu-latest
        #     name: linux_aarch64
        #     target: aarch64-unknown-linux-gnu
@@ -53,7 +53,7 @@ jobs:
         cd ..
         ./solipath poetry install
         ./solipath poetry run conan profile detect
-        ./solipath poetry run conan install --build=missing -of build .
+        ./solipath poetry run conan install --build=missing --profile:host=${{matrix.target}} -of build .
         cd build
         chmod +x conanbuild.sh
         ./conanbuild.sh && ../ruby-${{env.VERSION}}/configure --enable-load-relative --disable-shared --enable-static --without-gmp --prefix="$PWD/bin" && make && make install
