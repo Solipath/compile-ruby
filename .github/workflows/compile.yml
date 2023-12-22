@@ -52,7 +52,7 @@ jobs:
       with:
         url: "https://cache.ruby-lang.org/pub/ruby/${{env.SHORT_VERSION}}/ruby-${{env.VERSION}}.tar.gz"
         target: download
-    - name: compile ruby
+    - name: configure ruby build
       run: |
         cd download
         ls
@@ -65,8 +65,15 @@ jobs:
         ./solipath poetry run conan install --build=missing --profile:host=${{matrix.conan_target}} -of build .
         cd build
         chmod +x conanbuild.sh
-        ./conanbuild.sh && ../ruby-${{env.VERSION}}/configure --build=${{matrix.target}} --host=${{matrix.target}} --target=${{matrix.target}} --enable-load-relative --disable-shared --enable-static --without-gmp --prefix="$PWD/bin" && make && make install
+        ./conanbuild.sh && ../ruby-${{env.VERSION}}/configure --build=${{matrix.target}} --host=${{matrix.target}} --target=${{matrix.target}} --enable-load-relative --disable-shared --enable-static --without-gmp --prefix="$PWD/bin"
         tar -czvf ruby.tar.gz bin
+    - name: compile ruby
+      run: |
+        ls -a
+        echo "Print Makefile:"
+        cat Makefile
+        echo "start build"
+        ./conanbuild.sh && make && make install
     - name: release ruby
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
