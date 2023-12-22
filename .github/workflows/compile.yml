@@ -53,7 +53,7 @@ jobs:
         cd ..
         ./solipath poetry install
         ./solipath poetry run conan profile detect
-        ./solipath poetry run conan install --build=missing --profile:host=${{matrix.target}} -of build .
+        ./solipath poetry run conan install --build=missing --profile:host=${{matrix.target}} --profile:target=${{matrix.target}} -of build .
         cd build
         chmod +x conanbuild.sh
         ./conanbuild.sh && ../ruby-${{env.VERSION}}/configure --enable-load-relative --disable-shared --enable-static --without-gmp --prefix="$PWD/bin" && make && make install
