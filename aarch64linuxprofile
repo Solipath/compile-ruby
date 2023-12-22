@@ -2,7 +2,7 @@
 os=Linux
 arch=armv8
 
-compiler=gcc-aarch64-linux-gnu
+compiler=aarch64-linux-gnu-gcc
 build_type=Release
 compiler.libcxx=libstdc++11
 compiler.cppstd=11
