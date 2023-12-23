@@ -86,7 +86,8 @@ jobs:
         echo "Print Makefile:"
         cat Makefile
         echo "start build"
-        ./conanbuild.sh && make CC='${{matrix.compiler}}' && make install
+        #./conanbuild.sh && 
+        make CC='${{matrix.compiler}}' && make install
         tar -czvf ruby.tar.gz bin
     - name: release ruby
       uses: "marvinpinto/action-automatic-releases@latest"
