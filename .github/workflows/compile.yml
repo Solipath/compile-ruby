@@ -37,12 +37,12 @@ jobs:
             target: x86_64-unknown-linux-gnu
             compiler: gcc
             build: x86_64-unknown-linux-gnu
-          - os: ubuntu-latest
-            name: linux_aarch64
-            conan_target: aarch64linuxprofile
-            target: aarch64-unknown-linux-gnu
-            compiler: /usr/bin/aarch64-linux-gnu-gcc -DPAGE_SIZE=16384
-            build: x86_64-unknown-linux-gnu
+      #    - os: ubuntu-latest
+      #      name: linux_aarch64
+      #      conan_target: aarch64linuxprofile
+      #      target: aarch64-unknown-linux-gnu
+      #      compiler: /usr/bin/aarch64-linux-gnu-gcc -DPAGE_SIZE=16384
+      #      build: x86_64-unknown-linux-gnu
 
        #   - os: ubuntu-latest
        #     name: linux_aarch64
@@ -71,12 +71,14 @@ jobs:
         mv ruby-${{env.VERSION}} ..
         echo "git workspace: ${{github.workspace}}"
         cd ..
-        ./solipath poetry install
-        ./solipath poetry run conan profile detect
-        ./solipath poetry run conan install --build=missing --profile:host=${{matrix.conan_target}} -of build .
+        #./solipath poetry install
+        #./solipath poetry run conan profile detect
+        #./solipath poetry run conan install --build=missing --profile:host=${{matrix.conan_target}} -of build .
+        mkdir build
         cd build
-        chmod +x conanbuild.sh
-        ./conanbuild.sh && ../ruby-${{env.VERSION}}/configure --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}} --enable-load-relative --disable-shared --enable-static --without-gmp --prefix="$PWD/bin"
+        #chmod +x conanbuild.sh
+        #./conanbuild.sh &&
+        ../ruby-${{env.VERSION}}/configure --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}} --enable-load-relative --disable-shared --enable-static --without-gmp --prefix="$PWD/bin"
     - name: compile ruby
       run: |
         cd build

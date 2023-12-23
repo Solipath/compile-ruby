@@ -64,7 +64,6 @@ class RubyConan(ConanFile):
         self.requires("zlib/1.2.12")
         self.requires("gmp/6.3.0")
         self.requires("readline/8.2")
-        self.requires("libgcrypt/1.8.4")
         if self.options.with_openssl:
             self.requires("openssl/1.1.1s")
 
