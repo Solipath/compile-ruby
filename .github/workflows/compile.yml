@@ -23,7 +23,7 @@ jobs:
             name: macos_x86_64
             conan_target: default
             target: x86_64-apple-darwin
-            compiler: x86_64-apple-darwin-clang
+            compiler: clang
             build: x86_64-apple-darwin
           #- os: macos-latest
           #  name: macos_aarch64
