@@ -25,6 +25,7 @@ jobs:
             target: x86_64-apple-darwin
             compiler: x86_64-apple-darwin-clang
             build: x86_64-apple-darwin
+            make_flags: 
           #- os: macos-latest
           #  name: macos_aarch64
           #  conan_target: m1profile
@@ -37,12 +38,14 @@ jobs:
             target: x86_64-unknown-linux-gnu
             compiler: gcc
             build: x86_64-unknown-linux-gnu
+            make_flags:
           - os: ubuntu-latest
             name: linux_aarch64
             conan_target: aarch64linuxprofile
             target: aarch64-unknown-linux-gnu
             compiler: /usr/bin/aarch64-linux-gnu-gcc
             build: x86_64-unknown-linux-gnu
+            make_flags: -DPAGE_SIZE=16384
 
        #   - os: ubuntu-latest
        #     name: linux_aarch64
@@ -84,7 +87,7 @@ jobs:
         echo "Print Makefile:"
         cat Makefile
         echo "start build"
-        ./conanbuild.sh && make CC=${{matrix.compiler}} && make install
+        ./conanbuild.sh && make ${{matrix.make_flags}} CC=${{matrix.compiler}} && make install
         tar -czvf ruby.tar.gz bin
     - name: release ruby
       uses: "marvinpinto/action-automatic-releases@latest"
