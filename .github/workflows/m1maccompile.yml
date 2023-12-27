@@ -1,19 +1,32 @@
 name: M1 Mac Compile
 
-on: 
-  workflow_dispatch:
-    inputs:
-      VERSION:
-        required: true
-        type: string
-      SHORT_VERSION:
-        required: true
-        type: string
-
+#Temporary startup and env
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  
 env:
   CARGO_TERM_COLOR: always
-  VERSION: ${{inputs.VERSION}}
-  SHORT_VERSION: ${{inputs.SHORT_VERSION}}
+  VERSION: "3.2.2"
+  SHORT_VERSION: "3.2"
+
+#The eventual actual startup and env
+# on: 
+#   workflow_dispatch:
+#     inputs:
+#       VERSION:
+#         required: true
+#         type: string
+#       SHORT_VERSION:
+#         required: true
+#         type: string
+
+# env:
+#   CARGO_TERM_COLOR: always
+#   VERSION: ${{inputs.VERSION}}
+#   SHORT_VERSION: ${{inputs.SHORT_VERSION}}
 
 jobs:
   build:
@@ -60,7 +73,8 @@ jobs:
         cat Makefile
         echo "start build"
         #./conanbuild.sh && 
-        CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' && ./solipath make CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' && make install CC='${{matrix.compiler}}' LD='${{matrix.compiler}}'
+        #CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' && ./solipath make CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' && make install CC='${{matrix.compiler}}' LD='${{matrix.compiler}}'
+        ./solipath make && make install 
         tar -czvf ruby.tar.gz bin
     - name: release ruby
       uses: "marvinpinto/action-automatic-releases@latest"
