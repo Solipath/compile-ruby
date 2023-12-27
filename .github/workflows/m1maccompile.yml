@@ -1,0 +1,74 @@
+name: M1 Mac Compile
+
+on: 
+  workflow_dispatch:
+    inputs:
+      VERSION:
+        required: true
+        type: string
+      SHORT_VERSION:
+        required: true
+        type: string
+
+env:
+  CARGO_TERM_COLOR: always
+  VERSION: ${{inputs.VERSION}}
+  SHORT_VERSION: ${{inputs.SHORT_VERSION}}
+
+jobs:
+  build:
+
+    runs-on: ${{matrix.os}}
+
+    strategy: 
+      matrix:
+        include:
+          - os: macos-latest
+            name: macos_aarch64
+            target: aarch64-apple-darwin
+            compiler: clang -arch arm64
+            build: aarch64-apple-darwin
+
+    steps:
+    - name: checkout code
+      uses: actions/checkout@v3
+    - name: Download the file
+      uses: suisei-cn/actions-download-file@v1.3.0
+      id: downloadfile  # Remember to give an ID if you need the output filename
+      with:
+        url: "https://cache.ruby-lang.org/pub/ruby/${{env.SHORT_VERSION}}/ruby-${{env.VERSION}}.tar.gz"
+        target: download
+    - name: configure ruby build
+      run: |
+        uname -m
+        cd download
+        ls
+        tar -xvf ruby-${{env.VERSION}}.tar.gz
+        mv ruby-${{env.VERSION}} ..
+        echo "git workspace: ${{github.workspace}}"
+        cd ..
+        mkdir build
+        cp solipath build
+        cd build
+        echo '[{"name": "ruby", "version": "${{env.VERSION}}"}]' > solipath.json
+        ./solipath ../ruby-${{env.VERSION}}/configure --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}} --enable-load-relative --disable-shared --enable-static --without-gmp --prefix="$PWD/bin"
+    - name: compile ruby
+      run: |
+        cd build
+        ls -a
+        echo "Print Makefile:"
+        cat Makefile
+        echo "start build"
+        #./conanbuild.sh && 
+        make CC='${{matrix.compiler}}' && make install
+        tar -czvf ruby.tar.gz bin
+    - name: release ruby
+      uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "${{env.VERSION}}-${{matrix.name}}"
+        prerelease: false
+        title: "${{env.VERSION}}-${{matrix.name}}"
+        files: |
+          build/ruby.tar.gz
+          
