@@ -86,6 +86,6 @@ jobs:
         files: |
           build/ruby.tar.gz
     - name: kick off cross compilation
-      if: ${{'x86_64-apple-darwin' == ${{matrix.target}}
+      if: ${{'x86_64-apple-darwin' == matrix.target}}
       run: gh workflow run m1maccompile.yml -f VERSION=${{env.VERSION}} -f SHORT_VERSION=${{env.SHORT_VERSION}}
           
