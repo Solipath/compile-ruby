@@ -1,5 +1,15 @@
 name: Compile
 
+#don't actually call this, just make it quiet
+on: 
+  workflow_dispatch:
+    inputs:
+      VERSION:
+        required: true
+        type: string
+      SHORT_VERSION:
+        required: true
+        type: string
 # on:
 #   push:
 #     branches: [ main ]
