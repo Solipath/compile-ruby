@@ -27,7 +27,7 @@ jobs:
             name: macos_aarch64
             target: aarch64-apple-darwin
             compiler: clang -arch arm64
-            build: aarch64-apple-darwin
+            build: x86_64-apple-darwin
 
     steps:
     - name: checkout code
