@@ -10,6 +10,7 @@ env:
   CARGO_TERM_COLOR: always
   VERSION: "3.2.2"
   SHORT_VERSION: "3.2"
+  GITHUB_TOKEN: ${{ github.token }}
 
 jobs:
   build:
