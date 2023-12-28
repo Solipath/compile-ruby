@@ -74,7 +74,7 @@ jobs:
         echo "start build"
         #./conanbuild.sh && 
         #CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' && ./solipath make CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' && make install CC='${{matrix.compiler}}' LD='${{matrix.compiler}}'
-        MINIRUBY="$BASERUBY" && ./solipath make --trace CC='${{matrix.compiler}}' LD='${{matrix.compiler}}'
+        MINIRUBY="$BASERUBY" && ./solipath make V=1 CC='${{matrix.compiler}}' LD='${{matrix.compiler}}'
         ls
         head -3 miniruby
         echo "start install"
