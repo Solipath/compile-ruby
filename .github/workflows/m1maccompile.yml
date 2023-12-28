@@ -76,7 +76,7 @@ jobs:
         #CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' && ./solipath make CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' && make install CC='${{matrix.compiler}}' LD='${{matrix.compiler}}'
         MINIRUBY="$BASERUBY" && ./solipath make CC='${{matrix.compiler}}' LD='${{matrix.compiler}}'
         ls
-        head -1 miniruby
+        head -3 miniruby
         echo "start install"
         MINIRUBY="$BASERUBY" && ./solipath make install CC='${{matrix.compiler}}' LD='${{matrix.compiler}}'
         tar -czvf ruby.tar.gz bin
