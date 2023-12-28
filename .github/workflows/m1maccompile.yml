@@ -61,7 +61,7 @@ jobs:
       run: |
         cd openssl
         ls
-        tar -xvf openssl-1.1.1wtar.gz
+        tar -xvf openssl-1.1.1w.tar.gz
         cd openssl-1.1.1w
         mkdir build
         cd build
