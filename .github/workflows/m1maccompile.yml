@@ -39,7 +39,7 @@ jobs:
           - os: macos-latest
             name: macos_aarch64
             target: aarch64-apple-darwin
-            compiler: clang --verbose -arch arm64
+            compiler: clang -arch arm64
             build: x86_64-apple-darwin
 
     steps:
