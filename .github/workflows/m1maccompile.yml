@@ -74,7 +74,9 @@ jobs:
         echo "start build"
         #./conanbuild.sh && 
         #CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' && ./solipath make CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' && make install CC='${{matrix.compiler}}' LD='${{matrix.compiler}}'
-        MINIRUBY="$BASERUBY" && ./solipath make CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' && make install 
+        MINIRUBY="$BASERUBY" && ./solipath make CC='${{matrix.compiler}}' LD='${{matrix.compiler}}'
+        echo "start install"
+        MINIRUBY="$BASERUBY" && ./solipath make install CC='${{matrix.compiler}}' LD='${{matrix.compiler}}'
         tar -czvf ruby.tar.gz bin
     - name: release ruby
       uses: "marvinpinto/action-automatic-releases@latest"
