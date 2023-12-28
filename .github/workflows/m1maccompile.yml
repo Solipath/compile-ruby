@@ -45,12 +45,28 @@ jobs:
     steps:
     - name: checkout code
       uses: actions/checkout@v3
-    - name: Download the file
+    - name: Download openssl
+      id: openssl
+      with:
+        url: "https://github.com/openssl/openssl/releases/download/OpenSSL_1_1_1w/openssl-1.1.1w.tar.gz"
+        target: openssl
+    - name: Download the ruby
       uses: suisei-cn/actions-download-file@v1.3.0
       id: downloadfile  # Remember to give an ID if you need the output filename
       with:
         url: "https://cache.ruby-lang.org/pub/ruby/${{env.SHORT_VERSION}}/ruby-${{env.VERSION}}.tar.gz"
         target: download
+    - configure and build openssl
+      run: |
+        cd openssl
+        ls
+        tar -xvf openssl-1.1.1wtar.gz
+        cd openssl-1.1.1w
+        mkdir build
+        cd build
+        CC=${{matrix.compiler}} ../Configure --prefix="${{github.workspace}}/libraries" darwin64-arm64-cc no-shared
+        make
+        make install
     - name: configure ruby build
       run: |
         uname -m
@@ -64,7 +80,7 @@ jobs:
         cp solipath build
         cd build
         echo '[{"name": "ruby", "version": "${{env.VERSION}}"}]' > solipath.json
-        ./solipath ../ruby-${{env.VERSION}}/configure CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' CXX="clang++ -arch arm64" --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}} --enable-load-relative --disable-shared --enable-static --without-gmp --prefix="$PWD/bin"
+        ./solipath CFLAGS="${{github.workspace}}/libraries/lib" ../ruby-${{env.VERSION}}/configure CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' CXX="clang++ -arch arm64" --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}} --enable-load-relative --disable-shared --enable-static --without-gmp --prefix="$PWD/bin"
     - name: compile ruby
       run: |
         cd build
