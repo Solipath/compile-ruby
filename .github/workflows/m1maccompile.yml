@@ -56,7 +56,7 @@ jobs:
       with:
         url: "https://cache.ruby-lang.org/pub/ruby/${{env.SHORT_VERSION}}/ruby-${{env.VERSION}}.tar.gz"
         target: download
-    - configure and build openssl
+    - name: configure and build openssl
       run: |
         cd openssl
         ls
