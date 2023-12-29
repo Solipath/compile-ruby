@@ -95,9 +95,9 @@ jobs:
         cd readline-8.2
         mkdir build
         cd build
-        CC='${{matrix.compiler}}' ../configure --prefix="${{github.workspace}}/libraries"
-        make
-        make install
+        CC='${{matrix.compiler}}' ../configure --prefix="${{github.workspace}}/libraries"  --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}}
+        make CC='${{matrix.compiler}}' 
+        make install CC='${{matrix.compiler}}' 
 
     - name: configure and build openssl
       run: |
