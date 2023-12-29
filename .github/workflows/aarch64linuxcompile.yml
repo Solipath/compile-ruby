@@ -53,7 +53,7 @@ jobs:
         target: openssl
 
     - name: Download libffi
-      id: readline
+      id: libffi
       uses: suisei-cn/actions-download-file@v1.3.0
       with:
         url: "https://github.com/libffi/libffi/releases/download/v3.4.4/libffi-3.4.4.tar.gz"
