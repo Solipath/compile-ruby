@@ -133,7 +133,7 @@ jobs:
         cd readline-8.2
         mkdir build
         cd build
-        CC='${{matrix.compiler}}'  CFLAGS="-I${{github.workspace}}/libraries/include" LDFLAGS="-L${{github.workspace}}/libraries/lib" ../configure --prefix="${{github.workspace}}/libraries"  --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}} --enable-static --disable-shared
+        CC='${{matrix.compiler}}'  CFLAGS="-I${{github.workspace}}/libraries/include" LDFLAGS="-L${{github.workspace}}/libraries/lib" ../configure --prefix="${{github.workspace}}/libraries"  --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}} --enable-static --disable-shared -fPIC
         make
         make install
 
