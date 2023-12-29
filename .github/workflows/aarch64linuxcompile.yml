@@ -66,18 +66,6 @@ jobs:
         url: "https://github.com/libffi/libffi/releases/download/v3.4.4/libffi-3.4.4.tar.gz"
         target: libffi
 
-    - name: configure and build ncurses
-      run: |
-        cd ncurses
-        ls
-        tar -xvf ncurses-6.4.tar.gz
-        cd ncurses-6.4
-        mkdir build
-        cd build
-        CC='${{matrix.compiler}}' CXX="${{matrix.cppcompiler}}"  ../configure --prefix="${{github.workspace}}/libraries" --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}}
-        make
-        make install
-
     - name: Download readline
       id: readline
       uses: suisei-cn/actions-download-file@v1.3.0
@@ -101,6 +89,17 @@ jobs:
     - name: get compiler for aarch64 linux
       run: sudo apt-get update && sudo apt-get install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu 
 
+    - name: configure and build ncurses
+      run: |
+        cd ncurses
+        ls
+        tar -xvf ncurses-6.4.tar.gz
+        cd ncurses-6.4
+        mkdir build
+        cd build
+        CC='${{matrix.compiler}}' CXX="${{matrix.cppcompiler}}"  ../configure --prefix="${{github.workspace}}/libraries" --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}}  --without-cxx-binding
+        make
+        make install
 
     - name: configure and build libffi
       run: |
