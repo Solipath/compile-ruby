@@ -81,7 +81,7 @@ jobs:
         cp solipath build
         cd build
         echo '[{"name": "ruby", "version": "${{env.VERSION}}"}]' > solipath.json
-        ./solipath CFLAGS="${{github.workspace}}/libraries/lib" ../ruby-${{env.VERSION}}/configure CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' CXX="clang++ -arch arm64" --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}} --enable-load-relative --disable-shared --enable-static --without-gmp --prefix="$PWD/bin"
+        ./solipath ../ruby-${{env.VERSION}}/configure CFLAGS="${{github.workspace}}/libraries/lib" CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' CXX="clang++ -arch arm64" --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}} --enable-load-relative --disable-shared --enable-static --without-gmp --prefix="$PWD/bin"
     - name: compile ruby
       run: |
         cd build
