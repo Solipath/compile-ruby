@@ -1,20 +1,31 @@
 name: Aarch64 Linux Compile
 
-
-on: 
-  workflow_dispatch:
-    inputs:
-      VERSION:
-        required: true
-        type: string
-      SHORT_VERSION:
-        required: true
-        type: string
-
+#temporary
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 env:
   CARGO_TERM_COLOR: always
-  VERSION: ${{inputs.VERSION}}
-  SHORT_VERSION: ${{inputs.SHORT_VERSION}}
+  VERSION: "3.2.2"
+  SHORT_VERSION: "3.2"
+
+#will eventually use this to kick off
+# on: 
+#   workflow_dispatch:
+#     inputs:
+#       VERSION:
+#         required: true
+#         type: string
+#       SHORT_VERSION:
+#         required: true
+#         type: string
+
+# env:
+#   CARGO_TERM_COLOR: always
+#   VERSION: ${{inputs.VERSION}}
+#   SHORT_VERSION: ${{inputs.SHORT_VERSION}}
 
 jobs:
   build:
