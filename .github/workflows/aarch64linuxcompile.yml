@@ -161,7 +161,7 @@ jobs:
         cp solipath build
         cd build
         echo '[{"name": "ruby", "version": "${{env.VERSION}}"}]' > solipath.json
-        ./solipath ../ruby-${{env.VERSION}}/configure CFLAGS="-I${{github.workspace}}/libraries/include" LDFLAGS="-L${{github.workspace}}/libraries/lib" CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' CXX="${{matrix.cppcompiler}}" --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}} --enable-load-relative --disable-shared --enable-static --without-gmp --prefix="$PWD/bin" -fPIC
+        ./solipath ../ruby-${{env.VERSION}}/configure CFLAGS="-I${{github.workspace}}/libraries/include -fPIC" LDFLAGS="-L${{github.workspace}}/libraries/lib" CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' CXX="${{matrix.cppcompiler}}" --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}} --enable-load-relative --disable-shared --enable-static --without-gmp --prefix="$PWD/bin"
     - name: compile ruby
       run: |
         cd build
@@ -169,8 +169,6 @@ jobs:
         echo "Print Makefile:"
         cat Makefile
         echo "start build"
-        #./conanbuild.sh && 
-        #CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' && ./solipath make CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' && make install CC='${{matrix.compiler}}' LD='${{matrix.compiler}}'
         MINIRUBY="$BASERUBY" && ./solipath make V=1 CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' CXX="${{matrix.cppcompiler}}"
         echo "start install"
         MINIRUBY="$BASERUBY" && ./solipath make install CC='${{matrix.compiler}}' LD='${{matrix.compiler}}'
