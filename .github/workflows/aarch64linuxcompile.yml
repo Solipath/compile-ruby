@@ -111,8 +111,6 @@ jobs:
         #./conanbuild.sh && 
         #CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' && ./solipath make CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' && make install CC='${{matrix.compiler}}' LD='${{matrix.compiler}}'
         MINIRUBY="$BASERUBY" && ./solipath make V=1 CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' CXX="${{matrix.cppcompiler}}"
-        ls
-        head -3 miniruby
         echo "start install"
         MINIRUBY="$BASERUBY" && ./solipath make install CC='${{matrix.compiler}}' LD='${{matrix.compiler}}'
         tar -czvf ruby.tar.gz bin
