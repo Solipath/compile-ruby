@@ -1,9 +1,6 @@
 name: Aarch64 Linux Compile
 
 
-  
-
-The eventual actual startup and env
 on: 
   workflow_dispatch:
     inputs:

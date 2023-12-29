@@ -1,9 +1,5 @@
 name: M1 Mac Compile
 
-
-  
-
-The eventual actual startup and env
 on: 
   workflow_dispatch:
     inputs:
