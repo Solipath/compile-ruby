@@ -65,7 +65,7 @@ jobs:
         cd openssl-1.1.1w
         mkdir build
         cd build
-        CC='${{matrix.compiler}}' ../Configure --prefix="-L${{github.workspace}}/libraries" darwin64-arm64-cc no-shared
+        CC='${{matrix.compiler}}' ../Configure --prefix="${{github.workspace}}/libraries" darwin64-arm64-cc no-shared
         make
         make install
     - name: configure ruby build
@@ -81,7 +81,7 @@ jobs:
         cp solipath build
         cd build
         echo '[{"name": "ruby", "version": "${{env.VERSION}}"}]' > solipath.json
-        ./solipath ../ruby-${{env.VERSION}}/configure CFLAGS="${{github.workspace}}/libraries/lib" CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' CXX="clang++ -arch arm64" --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}} --enable-load-relative --disable-shared --enable-static --without-gmp --prefix="$PWD/bin"
+        ./solipath ../ruby-${{env.VERSION}}/configure CFLAGS="-L${{github.workspace}}/libraries/lib" CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' CXX="clang++ -arch arm64" --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}} --enable-load-relative --disable-shared --enable-static --without-gmp --prefix="$PWD/bin"
     - name: compile ruby
       run: |
         cd build
