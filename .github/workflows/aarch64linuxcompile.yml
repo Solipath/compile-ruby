@@ -52,12 +52,31 @@ jobs:
         url: "https://github.com/openssl/openssl/releases/download/openssl-3.2.0/openssl-3.2.0.tar.gz"
         target: openssl
 
+    - name: Download ncurses
+      id: ncurses
+      uses: suisei-cn/actions-download-file@v1.3.0
+      with:
+        url: "https://ftp.gnu.org/gnu/ncurses/ncurses-6.4.tar.gz"
+        target: ncurses
+
     - name: Download libffi
       id: libffi
       uses: suisei-cn/actions-download-file@v1.3.0
       with:
         url: "https://github.com/libffi/libffi/releases/download/v3.4.4/libffi-3.4.4.tar.gz"
         target: libffi
+
+    - name: configure and build ncurses
+      run: |
+        cd ncurses
+        ls
+        tar -xvf ncurses-6.4.tar.gz
+        cd ncurses-6.4
+        mkdir build
+        cd build
+        CC='${{matrix.compiler}}'  CPPFLAGS="-P"  ../configure --prefix="${{github.workspace}}/libraries" --without-cxx-binding --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}}
+        make
+        make install
 
     - name: Download readline
       id: readline
@@ -81,6 +100,7 @@ jobs:
         target: download
     - name: get compiler for aarch64 linux
       run: sudo apt-get update && sudo apt-get install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu 
+
 
     - name: configure and build libffi
       run: |
@@ -114,7 +134,7 @@ jobs:
         cd readline-8.2
         mkdir build
         cd build
-        CC='${{matrix.compiler}}' ../configure --prefix="${{github.workspace}}/libraries"  --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}} --enable-static --disable-shared
+        CC='${{matrix.compiler}}'  CFLAGS="-I${{github.workspace}}/libraries/include" LDFLAGS="-L${{github.workspace}}/libraries/lib" ../configure --prefix="${{github.workspace}}/libraries"  --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}} --enable-static --disable-shared
         make
         make install
 
