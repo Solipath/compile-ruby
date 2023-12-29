@@ -49,7 +49,7 @@ jobs:
       id: openssl
       uses: suisei-cn/actions-download-file@v1.3.0
       with:
-        url: "https://github.com/openssl/openssl/releases/download/OpenSSL_1_1_1w/openssl-1.1.1w.tar.gz"
+        url: "https://github.com/openssl/openssl/releases/download/openssl-3.2.0/openssl-3.2.0.tar.gz"
         target: openssl
     - name: Download the ruby
       uses: suisei-cn/actions-download-file@v1.3.0
@@ -61,8 +61,8 @@ jobs:
       run: |
         cd openssl
         ls
-        tar -xvf openssl-1.1.1w.tar.gz
-        cd openssl-1.1.1w
+        tar -xvf openssl-3.2.0.tar.gz
+        cd openssl-3.2.0
         mkdir build
         cd build
         CC='${{matrix.compiler}}' ../Configure --prefix="${{github.workspace}}/libraries" darwin64-arm64-cc no-shared
