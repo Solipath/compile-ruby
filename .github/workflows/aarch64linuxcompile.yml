@@ -97,7 +97,7 @@ jobs:
         cd ncurses-6.4
         mkdir build
         cd build
-        CC='${{matrix.compiler}}' CXX="${{matrix.cppcompiler}}"  ../configure --prefix="${{github.workspace}}/libraries" --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}}  --without-cxx-binding
+        CC='${{matrix.compiler}}' CXX="${{matrix.cppcompiler}}" CPPFLAGS="-P" ../configure --prefix="${{github.workspace}}/libraries" --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}}  --without-cxx-binding
         make
         make install
 
