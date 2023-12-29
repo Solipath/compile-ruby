@@ -40,7 +40,7 @@ jobs:
       with:
         url: "https://github.com/madler/zlib/releases/download/v1.3/zlib-1.3.tar.gz"
         target: openssl
-      - name: Download zlib
+    - name: Download zlib
       id: zlib
       uses: suisei-cn/actions-download-file@v1.3.0
       with:
