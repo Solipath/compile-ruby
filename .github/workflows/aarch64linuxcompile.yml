@@ -80,6 +80,13 @@ jobs:
         url: "https://github.com/madler/zlib/releases/download/v1.3/zlib-1.3.tar.gz"
         target: zlib
 
+    - name: Download libyaml
+      id: libyaml
+      uses: suisei-cn/actions-download-file@v1.3.0
+      with:
+        url: "https://github.com/yaml/libyaml/releases/download/0.2.5/yaml-0.2.5.tar.gz"
+        target: libyaml
+
     - name: Download the ruby
       uses: suisei-cn/actions-download-file@v1.3.0
       id: downloadfile
@@ -107,6 +114,18 @@ jobs:
         ls
         tar -xvf libffi-3.4.4.tar.gz
         cd libffi-3.4.4
+        mkdir build
+        cd build
+        CC='${{matrix.compiler}}' ../configure --prefix="${{github.workspace}}/libraries" --enable-static --disable-shared --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}}
+        make
+        make install
+
+      - name: configure and build libyaml
+      run: |
+        cd yaml
+        ls
+        tar -xvf yaml-0.2.5.tar.gz
+        cd yaml-0.2.5
         mkdir build
         cd build
         CC='${{matrix.compiler}}' ../configure --prefix="${{github.workspace}}/libraries" --enable-static --disable-shared --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}}
