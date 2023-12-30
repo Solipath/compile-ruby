@@ -120,7 +120,7 @@ jobs:
         make
         make install
 
-      - name: configure and build libyaml
+    - name: configure and build libyaml
       run: |
         cd yaml
         ls
