@@ -33,6 +33,12 @@ jobs:
     steps:
     - name: checkout code
       uses: actions/checkout@v3
+    - name: Download libyaml
+      id: libyaml
+      uses: suisei-cn/actions-download-file@v1.3.0
+      with:
+        url: "https://github.com/yaml/libyaml/releases/download/0.2.5/yaml-0.2.5.tar.gz"
+        target: libyaml
     - name: Download openssl
       id: openssl
       uses: suisei-cn/actions-download-file@v1.3.0
@@ -45,6 +51,17 @@ jobs:
       with:
         url: "https://cache.ruby-lang.org/pub/ruby/${{env.SHORT_VERSION}}/ruby-${{env.VERSION}}.tar.gz"
         target: download
+    - name: configure and build libyaml
+      run: |
+        cd libyaml
+        ls
+        tar -xvf yaml-0.2.5.tar.gz
+        cd yaml-0.2.5
+        mkdir build
+        cd build
+        CC='${{matrix.compiler}}' ../configure --prefix="${{github.workspace}}/libraries" --enable-static --disable-shared --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}}
+        make
+        make install
     - name: configure and build openssl
       run: |
         cd openssl
