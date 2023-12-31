@@ -88,9 +88,6 @@ jobs:
       with:
         url: "https://cache.ruby-lang.org/pub/ruby/${{env.SHORT_VERSION}}/ruby-${{env.VERSION}}.tar.gz"
         target: download
-    - name: get compiler for aarch64 linux
-      run: sudo apt-get update && sudo apt-get install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu 
-
     - name: configure and build ncurses
       run: |
         cd ncurses
