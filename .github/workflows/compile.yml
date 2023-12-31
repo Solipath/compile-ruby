@@ -132,7 +132,7 @@ jobs:
         cd zlib-1.3
         mkdir build
         cd build
-        CC='${{matrix.compiler}}' ../configure --prefix="${{github.workspace}}/bin" --static
+        CC='${{matrix.compiler}}' CFLAGS="-fPIC" ../configure --prefix="${{github.workspace}}/bin" --static
         make
         make install
     
