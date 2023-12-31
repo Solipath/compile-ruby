@@ -41,13 +41,6 @@ jobs:
         url: "https://github.com/openssl/openssl/releases/download/openssl-3.2.0/openssl-3.2.0.tar.gz"
         target: openssl
 
-    - name: Download ncurses
-      id: ncurses
-      uses: suisei-cn/actions-download-file@v1.3.0
-      with:
-        url: "https://ftp.gnu.org/gnu/ncurses/ncurses-6.4.tar.gz"
-        target: ncurses
-
     - name: Download libffi
       id: libffi
       uses: suisei-cn/actions-download-file@v1.3.0
@@ -82,17 +75,6 @@ jobs:
       with:
         url: "https://cache.ruby-lang.org/pub/ruby/${{env.SHORT_VERSION}}/ruby-${{env.VERSION}}.tar.gz"
         target: download
-    - name: configure and build ncurses
-      run: |
-        cd ncurses
-        ls
-        tar -xvf ncurses-6.4.tar.gz
-        cd ncurses-6.4
-        mkdir build
-        cd build
-        CC='${{matrix.compiler}}' CXX="${{matrix.cppcompiler}}" CPPFLAGS="-P -fPIC"  ../configure --prefix="${{github.workspace}}/bin" --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}} --without-cxx-binding --without-shared --disable-stripping
-        make
-        make install
 
     - name: configure and build libffi
       run: |
