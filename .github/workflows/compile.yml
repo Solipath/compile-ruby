@@ -108,7 +108,7 @@ jobs:
         cd libffi-3.4.4
         mkdir build
         cd build
-        CC='${{matrix.compiler}}' ../configure --prefix="${{github.workspace}}/bin" --enable-static --disable-shared --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}}
+        CC='${{matrix.compiler}}' CFLAGS="-fPIC" ../configure --prefix="${{github.workspace}}/bin" --enable-static --disable-shared --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}}
         make
         make install
 
