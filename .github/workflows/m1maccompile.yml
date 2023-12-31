@@ -29,6 +29,7 @@ jobs:
             compiler: clang -arch arm64
             cppcompiler: clang++ -arch arm64
             build: x86_64-apple-darwin
+            openssltarget: darwin64-arm64-cc
 
     steps:
     - name: checkout code
@@ -70,7 +71,7 @@ jobs:
         cd openssl-3.2.0
         mkdir build
         cd build
-        CC='${{matrix.compiler}}' ../Configure --prefix="${{github.workspace}}/bin" darwin64-arm64-cc no-shared
+        CC='${{matrix.compiler}}' ../Configure --prefix="${{github.workspace}}/bin" ${{matrix.openssltarget}} no-shared
         make
         make install
     - name: configure ruby build
@@ -95,7 +96,10 @@ jobs:
         MINIRUBY="$BASERUBY" && ./solipath make V=1 CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' CXX="${{matrix.cppcompiler}}"
         ls
         MINIRUBY="$BASERUBY" && ./solipath make install CC='${{matrix.compiler}}' LD='${{matrix.compiler}}'
-        tar -czvf ruby.tar.gz ${{github.workspace}}/bin
+        
+    - name: compress ruby
+      run: |
+        tar -czvf ruby.tar.gz bin
     - name: release ruby
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
@@ -104,5 +108,5 @@ jobs:
         prerelease: false
         title: "${{env.VERSION}}-${{matrix.name}}"
         files: |
-          build/ruby.tar.gz
+          ruby.tar.gz
           
