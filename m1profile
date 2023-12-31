@@ -1,8 +1,0 @@
-include(default)
-[settings]
-arch=armv8
-os=Macos
-compiler=apple-clang
-compiler.version=15
-compiler.libcxx=libc++
-build_type=Release

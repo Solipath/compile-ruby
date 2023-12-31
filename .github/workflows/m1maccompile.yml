@@ -59,7 +59,7 @@ jobs:
         cd yaml-0.2.5
         mkdir build
         cd build
-        CC='${{matrix.compiler}}' ../configure --prefix="${{github.workspace}}/libraries" --enable-static --disable-shared --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}}
+        CC='${{matrix.compiler}}' ../configure --prefix="${{github.workspace}}/bin" --enable-static --disable-shared --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}}
         make
         make install
     - name: configure and build openssl
@@ -70,7 +70,7 @@ jobs:
         cd openssl-3.2.0
         mkdir build
         cd build
-        CC='${{matrix.compiler}}' ../Configure --prefix="${{github.workspace}}/libraries" darwin64-arm64-cc no-shared
+        CC='${{matrix.compiler}}' ../Configure --prefix="${{github.workspace}}/bin" darwin64-arm64-cc no-shared
         make
         make install
     - name: configure ruby build
@@ -86,22 +86,16 @@ jobs:
         cp solipath build
         cd build
         echo '[{"name": "ruby", "version": "${{env.VERSION}}"}]' > solipath.json
-        ./solipath ../ruby-${{env.VERSION}}/configure CFLAGS="-I${{github.workspace}}/libraries/include" LDFLAGS="-L${{github.workspace}}/libraries/lib" CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' CXX="${{matrix.cppcompiler}}" --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}} --enable-load-relative --disable-shared --enable-static --without-gmp --prefix="$PWD/bin"
+        ./solipath ../ruby-${{env.VERSION}}/configure CFLAGS="-I${{github.workspace}}/bin/include" LDFLAGS="-L${{github.workspace}}/bin/lib" CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' CXX="${{matrix.cppcompiler}}" --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}} --enable-load-relative --disable-shared --enable-static --without-gmp --prefix="${{github.workspace}}/bin"
     - name: compile ruby
       run: |
         cd build
         ls -a
-        echo "Print Makefile:"
-        cat Makefile
         echo "start build"
-        #./conanbuild.sh && 
-        #CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' && ./solipath make CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' && make install CC='${{matrix.compiler}}' LD='${{matrix.compiler}}'
         MINIRUBY="$BASERUBY" && ./solipath make V=1 CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' CXX="${{matrix.cppcompiler}}"
         ls
-        head -3 miniruby
-        echo "start install"
         MINIRUBY="$BASERUBY" && ./solipath make install CC='${{matrix.compiler}}' LD='${{matrix.compiler}}'
-        tar -czvf ruby.tar.gz bin
+        tar -czvf ruby.tar.gz ${{github.workspace}}/bin
     - name: release ruby
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
