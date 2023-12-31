@@ -26,7 +26,6 @@ jobs:
             target: x86_64-apple-darwin
             compiler: clang
             build: x86_64-apple-darwin
-            compiler: clang
             cppcompiler: clang++
             openssltarget: darwin64-x86_64
           - os: ubuntu-latest
@@ -34,7 +33,6 @@ jobs:
             target: x86_64-unknown-linux-gnu
             compiler: gcc
             build: x86_64-unknown-linux-gnu
-            compiler: gcc
             cppcompiler: g++
             openssltarget: linux-x86_64
 
