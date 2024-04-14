@@ -9,8 +9,8 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
-  VERSION: "3.2.2"
-  SHORT_VERSION: "3.2"
+  VERSION: "3.3.0"
+  SHORT_VERSION: "3.3"
   GITHUB_TOKEN: ${{ github.token }}
 
 jobs:
