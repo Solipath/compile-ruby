@@ -170,7 +170,7 @@ jobs:
         cd ..
         mkdir build
         cd build
-        echo '[{"name": "ruby", "version": "${{env.VERSION}}"}]' > solipath.json
+        echo '[{"name": "ruby", "version": "${{env.SHORT_VERSION}}"}]' > solipath.json
         ../ruby-${{env.VERSION}}/configure CFLAGS="-I${{github.workspace}}/bin/include -fPIC" LDFLAGS="-L${{github.workspace}}/bin/lib" CC='${{matrix.compiler}}' LD='${{matrix.compiler}}' CXX="${{matrix.cppcompiler}}" --build=${{matrix.build}} --host=${{matrix.target}} --target=${{matrix.target}} --enable-load-relative --disable-shared --enable-static --without-gmp --prefix="${{github.workspace}}/bin"
     - name: compile ruby
       run: |
